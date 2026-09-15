@@ -50,7 +50,7 @@ export default function ProjectCard({
           to={caseStudyUrl}
           className="font-semibold text-primary inline-flex items-center gap-1 group-hover:gap-2 transition-all"
         >
-          View Case Study <span>?</span>
+          View Case Study <span>→</span>
         </Link>
 
         <div className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export default function ProjectCard({
               rel="noreferrer"
               className="text-text-subtle hover:text-text-main font-mono"
             >
-              GitHub ?
+              GitHub ↗
             </a>
           )}
           {liveUrl && (
@@ -71,7 +71,7 @@ export default function ProjectCard({
               rel="noreferrer"
               className="text-text-subtle hover:text-text-main font-mono"
             >
-              Demo ?
+              Demo ↗
             </a>
           )}
         </div>

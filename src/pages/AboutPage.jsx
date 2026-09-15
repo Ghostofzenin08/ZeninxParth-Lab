@@ -45,7 +45,7 @@ export default function AboutPage() {
             I am a Computer Science student, software builder, and competitive exam aspirant preparing for Maharashtra state examinations (including <strong>MPSC</strong> and <strong>Talathi</strong>). This dual discipline defines my approach to code: methodical, resilient, and focused on clean problem decomposition.
           </p>
           <p>
-            Together with my collaborator <strong>Parth Sonawane</strong>, we established the <strong>ZeninXParth</strong> initiative to bridge game mechanics with serverless cloud architectures. We don't just build toy projects?we ship full game loops, configure cross-platform cloud score databases, and deploy zero-latency REST APIs.
+            Together with my collaborator <strong>Parth Sonawane</strong>, we established the <strong>ZeninXParth</strong> initiative to bridge game mechanics with serverless cloud architectures. We don't just build toy projects—we ship full game loops, configure cross-platform cloud score databases, and deploy zero-latency REST APIs.
           </p>
         </div>
       </Section>
@@ -107,10 +107,10 @@ export default function AboutPage() {
 
       <div className="mt-14 pt-8 border-t border-border flex flex-wrap gap-4">
         <Button href="https://github.com/Ghostofzenin08" variant="primary" size="md">
-          Ghostofzenin08 on GitHub ?
+          Ghostofzenin08 on GitHub ↗
         </Button>
         <Button href="https://github.com/parthongit89" variant="secondary" size="md">
-          Parthongit89 on GitHub ?
+          Parthongit89 on GitHub ↗
         </Button>
         <Button href="mailto:harshalsonawane.dev@gmail.com" variant="outline" size="md">
           Get in Touch

@@ -54,7 +54,7 @@ export default function Navbar() {
             rel="noreferrer"
             className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-text-muted hover:text-text-main hover:bg-surface-elevated"
           >
-            GitHub ?
+            GitHub ↗
           </a>
         </nav>
 
@@ -103,7 +103,7 @@ export default function Navbar() {
             rel="noreferrer"
             className="px-3 py-2 rounded-lg text-sm text-text-muted"
           >
-            GitHub ?
+            GitHub ↗
           </a>
         </div>
       )}

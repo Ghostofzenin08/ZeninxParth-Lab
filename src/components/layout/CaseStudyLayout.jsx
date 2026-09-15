@@ -14,13 +14,13 @@ export default function CaseStudyLayout({ project }) {
           to="/projects"
           className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-text-subtle hover:text-primary transition-colors"
         >
-          <span>?</span> Back to all projects
+          <span>←</span> Back to all projects
         </Link>
       </div>
 
       <Section className="!py-0">
         <span className="text-xs font-mono uppercase tracking-widest text-primary font-semibold">
-          Case Study ? {project.category}
+          Case Study • {project.category}
         </span>
         <h1 className="mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight text-text-main">
           {project.title}
@@ -40,12 +40,12 @@ export default function CaseStudyLayout({ project }) {
         <div className="mt-8 flex flex-wrap items-center gap-3">
           {project.liveUrl && (
             <Button href={project.liveUrl} variant="primary" size="md">
-              Live Demo ?
+              Live Demo ↗
             </Button>
           )}
           {project.githubUrl && (
             <Button href={project.githubUrl} variant="secondary" size="md">
-              GitHub Repository ?
+              GitHub Repository ↗
             </Button>
           )}
         </div>
@@ -84,7 +84,7 @@ export default function CaseStudyLayout({ project }) {
                   rel="noreferrer"
                   className="text-xs font-mono text-primary hover:underline"
                 >
-                  GitHub ?
+                  GitHub ↗
                 </a>
               </div>
               <p className="mt-2 text-sm text-text-muted leading-relaxed">
@@ -132,7 +132,7 @@ export default function CaseStudyLayout({ project }) {
               key={index}
               className="p-3.5 rounded-xl border border-border bg-surface text-sm text-text-muted flex items-start gap-2.5"
             >
-              <span className="text-emerald-500 mt-0.5 font-bold">?</span>
+              <span className="text-emerald-500 mt-0.5 font-bold">✓</span>
               <span>{feat}</span>
             </li>
           ))}
@@ -153,11 +153,11 @@ export default function CaseStudyLayout({ project }) {
 
       <div className="mt-14 pt-8 border-t border-border flex items-center justify-between">
         <Button to="/projects" variant="outline" size="sm">
-          ? Back to Projects
+          ← Back to Projects
         </Button>
         {project.liveUrl && (
           <Button href={project.liveUrl} variant="primary" size="sm">
-            Launch Live Project ?
+            Launch Live Project ↗
           </Button>
         )}
       </div>
