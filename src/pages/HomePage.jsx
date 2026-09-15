@@ -69,7 +69,7 @@ export default function HomePage() {
               to="/projects"
               className="mt-4 md:mt-0 text-sm font-semibold text-primary hover:underline flex items-center gap-1"
             >
-              View all 5 projects <span>?</span>
+              View all projects <span>→</span>
             </Link>
           </div>
 
@@ -107,7 +107,7 @@ export default function HomePage() {
               </p>
               <div className="mt-6">
                 <Button to="/about" variant="outline" size="md">
-                  Read Full Bio & Skills ?
+                  Read Full Bio & Skills →
                 </Button>
               </div>
             </div>
@@ -139,13 +139,13 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button href="https://github.com/Ghostofzenin08" variant="primary" size="md">
-                GitHub: Ghostofzenin08 ?
+                GitHub: Ghostofzenin08 ↗
               </Button>
               <Button href="mailto:harshalsonawane.dev@gmail.com" variant="secondary" size="md">
                 Send an Email
               </Button>
               <Button href="https://linkedin.com" variant="outline" size="md">
-                LinkedIn ?
+                LinkedIn ↗
               </Button>
             </div>
           </div>
