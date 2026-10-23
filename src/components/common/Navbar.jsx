@@ -1,75 +1,141 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from '../ui/ThemeToggle';
+import { sounds } from '../../utils/soundEffects';
 
 export default function Navbar() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(sounds.isMuted());
+
+  const handleToggleSound = () => {
+    const muted = sounds.toggleMute();
+    setIsMuted(muted);
+  };
 
   const links = [
-    { name: 'Home', path: '/' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'About', path: '/about' },
+    { name: 'Game Store', path: '/projects' },
+    { name: 'Echo of Dread', path: '/projects/echo-of-dread', highlight: true },
+    { name: 'About Studio', path: '/about' },
   ];
 
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
+    return location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/70 transition-colors">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-border/80 transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-lg bg-black border border-primary/40 flex items-center justify-center group-hover:border-primary transition-all">
-            <span className="text-primary font-bold font-mono text-sm tracking-tighter">ZX</span>
+        {/* Brand Logo */}
+        <Link
+          to="/"
+          onClick={() => sounds.playUiClick()}
+          className="flex items-center gap-3 group"
+        >
+          <div className="w-9 h-9 rounded-xl bg-black border border-primary/40 flex items-center justify-center group-hover:border-primary group-hover:shadow-glow-red transition-all relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="text-primary font-black font-mono text-sm tracking-tighter relative z-10">
+              ZX
+            </span>
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-sm tracking-tight text-text-main group-hover:text-primary transition-colors">
-              ZeninXParth
+            <span className="font-extrabold text-sm tracking-tight text-text-main group-hover:text-primary transition-colors flex items-center gap-1.5">
+              <span>ZeninXParth</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-primary/10 text-primary border border-primary/20">
+                LABS
+              </span>
             </span>
             <span className="text-[10px] font-mono text-text-subtle tracking-wider uppercase">
-              Harshal & Parth
+              Indie Games & Tech
             </span>
           </div>
         </Link>
 
+        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">
+          <Link
+            to="/"
+            onClick={() => sounds.playUiClick()}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all ${
+              location.pathname === '/'
+                ? 'text-primary bg-primary/10 font-bold'
+                : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
+            }`}
+          >
+            Home
+          </Link>
+
           {links.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => {
+                if (link.highlight) {
+                  sounds.playWarp();
+                } else {
+                  sounds.playUiClick();
+                }
+              }}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
                 isActive(link.path)
-                  ? 'text-primary bg-primary/10 font-semibold'
+                  ? 'text-primary bg-primary/10 font-bold'
                   : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
               }`}
             >
-              {link.name}
+              {link.highlight && (
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+              )}
+              <span>{link.name}</span>
             </Link>
           ))}
+
+          {/* Direct itch.io external store link */}
           <a
-            href="https://github.com/Ghostofzenin08"
+            href="https://zeninxparth.itch.io"
             target="_blank"
             rel="noreferrer"
-            className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-text-muted hover:text-text-main hover:bg-surface-elevated"
+            onClick={() => sounds.playUiClick()}
+            className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold text-[#fa5c5c] hover:bg-[#fa5c5c]/10 flex items-center gap-1 transition-all"
           >
-            GitHub ↗
+            <span>itch.io</span>
+            <span>↗</span>
           </a>
         </nav>
 
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <Link
-            to="/projects"
-            className="hidden sm:inline-flex items-center justify-center px-4 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider bg-primary text-white hover:bg-primary-hover shadow-sm"
-          >
-            Showcase
-          </Link>
-
+        {/* Action Controls & Utilities */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Sound FX Mute Toggle */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 md:hidden rounded-lg border border-border text-text-main"
+            onClick={handleToggleSound}
+            aria-label={isMuted ? "Unmute UI audio" : "Mute UI audio"}
+            title={isMuted ? "Audio muted (Click to enable)" : "Tactile UI audio active (Click to mute)"}
+            className="p-2 rounded-xl border border-border bg-surface hover:bg-surface-elevated text-text-subtle hover:text-text-main transition-colors text-xs"
+          >
+            {isMuted ? '🔇' : '🔊'}
+          </button>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          {/* itch.io Store Primary CTA Button */}
+          <a
+            href="https://zeninxparth.itch.io"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => sounds.playWarp()}
+            className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-[#fa5c5c] text-white hover:bg-[#e04545] shadow-lg shadow-[#fa5c5c]/25 transition-all"
+          >
+            <span>itch.io Store ↗</span>
+          </a>
+
+          {/* Mobile hamburger menu button */}
+          <button
+            onClick={() => {
+              sounds.playUiClick();
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
+            className="p-2 md:hidden rounded-xl border border-border bg-surface text-text-main"
             aria-label="Toggle menu"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,27 +149,63 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-surface px-4 py-3 flex flex-col gap-2">
+        <div className="md:hidden border-b border-border bg-surface/95 backdrop-blur-xl px-4 py-4 flex flex-col gap-2">
+          <Link
+            to="/"
+            onClick={() => {
+              sounds.playUiClick();
+              setMobileMenuOpen(false);
+            }}
+            className={`px-3 py-2 rounded-xl text-sm font-mono ${
+              location.pathname === '/' ? 'text-primary bg-primary/10 font-bold' : 'text-text-muted'
+            }`}
+          >
+            Home
+          </Link>
+
           {links.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`px-3 py-2 rounded-lg text-sm font-medium ${
-                isActive(link.path) ? 'text-primary bg-primary/10' : 'text-text-muted'
+              onClick={() => {
+                if (link.highlight) sounds.playWarp();
+                else sounds.playUiClick();
+                setMobileMenuOpen(false);
+              }}
+              className={`px-3 py-2 rounded-xl text-sm font-mono flex items-center justify-between ${
+                isActive(link.path) ? 'text-primary bg-primary/10 font-bold' : 'text-text-muted'
               }`}
             >
-              {link.name}
+              <span>{link.name}</span>
+              {link.highlight && (
+                <span className="text-[10px] uppercase font-bold text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/30">
+                  Flagship
+                </span>
+              )}
             </Link>
           ))}
+
+          <a
+            href="https://zeninxparth.itch.io"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            className="px-3 py-2 rounded-xl text-sm font-mono font-bold text-[#fa5c5c] bg-[#fa5c5c]/10 border border-[#fa5c5c]/20 flex items-center justify-between mt-2"
+          >
+            <span>Visit itch.io Profile & Store</span>
+            <span>↗</span>
+          </a>
+
           <a
             href="https://github.com/Ghostofzenin08"
             target="_blank"
             rel="noreferrer"
-            className="px-3 py-2 rounded-lg text-sm text-text-muted"
+            onClick={() => setMobileMenuOpen(false)}
+            className="px-3 py-2 rounded-xl text-xs font-mono text-text-subtle hover:text-text-main"
           >
-            GitHub ↗
+            GitHub: @Ghostofzenin08 ↗
           </a>
         </div>
       )}
