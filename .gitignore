@@ -36,3 +36,6 @@ Thumbs.db
 
 # Test / coverage artifacts
 coverage/
+
+# Local workspace backups
+legacy_portfolio/
