@@ -5,23 +5,36 @@ import { projectsData } from '../data/projectsData';
 import { sounds } from '../utils/soundEffects';
 
 export default function ProjectsPage() {
-  const [filter, setFilter] = useState('All');
+  const [filter, setFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
-    { label: 'All Titles', value: 'All' },
-    { label: '🕹️ itch.io Store', value: 'itch' },
-    { label: 'Godot Engine', value: 'Godot' },
-    { label: 'Python & Pygame', value: 'Python' },
-    { label: 'Web & APIs', value: 'Web' },
+    { label: 'All Systems', value: 'all', count: projectsData.length },
+    { label: '🤖 AI & Full-Stack', value: 'ai-fullstack', count: projectsData.filter((p) => p.filterCategory === 'ai-fullstack').length },
+    { label: '🎮 Indie Game Dev', value: 'game-dev', count: projectsData.filter((p) => p.filterCategory === 'game-dev').length },
+    { label: '🌌 Astrophysics & Sim', value: 'astrophysics', count: projectsData.filter((p) => p.filterCategory === 'astrophysics').length },
+    { label: '🛠️ Developer Tools & UI', value: 'tools-ui', count: projectsData.filter((p) => p.filterCategory === 'tools-ui').length },
+    { label: '🕹️ itch.io Releases', value: 'itch', count: projectsData.filter((p) => !!p.itchUrl).length },
   ];
 
   const filteredProjects = projectsData.filter((project) => {
-    if (filter === 'All') return true;
-    if (filter === 'itch') return !!project.itchUrl;
-    if (filter === 'Godot') return project.tags.some(t => t.includes('Godot'));
-    if (filter === 'Python') return project.tags.some(t => t.toLowerCase().includes('python') || t.includes('Pygame'));
-    if (filter === 'Web') return project.tags.some(t => t.includes('React') || t.includes('REST') || t.includes('Canvas'));
-    return true;
+    // Category filter
+    let matchesCategory = true;
+    if (filter === 'all') matchesCategory = true;
+    else if (filter === 'itch') matchesCategory = !!project.itchUrl;
+    else matchesCategory = project.filterCategory === filter;
+
+    // Search query filter
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return matchesCategory;
+
+    const matchesSearch =
+      project.title.toLowerCase().includes(q) ||
+      project.subtitle.toLowerCase().includes(q) ||
+      project.tags.some((t) => t.toLowerCase().includes(q)) ||
+      project.engine.toLowerCase().includes(q);
+
+    return matchesCategory && matchesSearch;
   });
 
   return (
@@ -29,38 +42,65 @@ export default function ProjectsPage() {
       <Section className="!py-4">
         {/* Breadcrumb / Top badge */}
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-mono uppercase tracking-wider text-primary font-semibold">
-            Storefront & Technical Case Studies
+          <span className="text-xs font-mono uppercase tracking-wider text-primary font-bold">
+            Engineering Systems & Production Releases
           </span>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#fa5c5c]/10 text-[#fa5c5c] border border-[#fa5c5c]/30 font-bold">
-            zeninxparth.itch.io
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-bold">
+            8 Published Projects
           </span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-text-main mt-1 tracking-tight">
-              Indie Game Store & Lab
+            <h1 className="text-4xl sm:text-5xl font-black text-text-main mt-1 tracking-tight">
+              Projects & Architecture
             </h1>
-            <p className="mt-4 text-text-muted max-w-2xl text-base leading-relaxed">
-              Explore playable indie titles on itch.io, dedicated architecture case studies, game physics experiments, and low-latency cloud microservices.
+            <p className="mt-3 text-text-muted max-w-2xl text-base leading-relaxed">
+              Explore 8 specialized engineering solutions spanning Google Gemini AI microservices, Godot 4.x time-loop state machines, n-body gravitational simulations, and developer productivity tools.
             </p>
           </div>
 
           <a
-            href="https://zeninxparth.itch.io"
+            href="https://github.com/Ghostofzenin08"
             target="_blank"
             rel="noreferrer"
-            onClick={() => sounds.playWarp()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#fa5c5c] text-white hover:bg-[#e04545] font-mono font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#fa5c5c]/25 transition-all self-start md:self-end"
+            onClick={() => sounds.playUiClick()}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-surface border border-primary/40 hover:border-primary text-text-main font-mono font-bold text-xs uppercase tracking-wider shadow-md transition-all self-start md:self-end"
           >
-            <span>Visit itch.io Storefront</span>
+            <span>GitHub Profile</span>
             <span>↗</span>
           </a>
         </div>
 
+        {/* Search & Category Filter Controls */}
+        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          {/* Search Box */}
+          <div className="relative flex-1 max-w-md">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by tech, keyword (e.g. Gemini, Godot, NumPy)..."
+              className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-xs font-mono text-text-main placeholder-text-subtle focus:outline-none focus:border-primary transition-colors"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-2.5 text-xs text-text-subtle hover:text-text-main"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          <div className="text-xs font-mono text-text-subtle self-center">
+            Showing {filteredProjects.length} of {projectsData.length} systems
+          </div>
+        </div>
+
         {/* Filter Chips */}
-        <div className="mt-8 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button
               key={cat.value}
@@ -68,41 +108,50 @@ export default function ProjectsPage() {
                 sounds.playUiClick();
                 setFilter(cat.value);
               }}
-              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all duration-200 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all duration-200 flex items-center gap-1.5 ${
                 filter === cat.value
                   ? 'bg-primary text-white font-bold shadow-md shadow-primary/25'
                   : 'bg-surface border border-border text-text-muted hover:text-text-main hover:bg-surface-elevated'
               }`}
             >
-              {cat.label}
+              <span>{cat.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                filter === cat.value ? 'bg-black/30 text-white' : 'bg-surface-elevated text-text-subtle'
+              }`}>
+                {cat.count}
+              </span>
             </button>
           ))}
         </div>
       </Section>
 
-      {/* Grid of Projects */}
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            id={project.id}
-            title={project.title}
-            description={project.subtitle}
-            tags={project.tags}
-            category={project.category}
-            caseStudyUrl={project.caseStudyUrl}
-            itchUrl={project.itchUrl}
-            liveUrl={project.liveUrl}
-            githubUrl={project.githubUrl}
-            coverImage={project.coverImage}
-            thumbnail={project.thumbnail}
-            rating={project.rating}
-            badge={project.badge}
-            platforms={project.platforms}
-            featured={project.featured}
-          />
-        ))}
-      </div>
+      {/* Grid of 3D Tilted Projects */}
+      {filteredProjects.length > 0 ? (
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              {...project}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-12 text-center py-16 border border-dashed border-border rounded-3xl p-8">
+          <p className="text-sm font-mono text-text-muted">
+            No projects matched the search "{searchQuery}" under "{filter}".
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setFilter('all');
+              setSearchQuery('');
+            }}
+            className="mt-4 px-4 py-2 rounded-xl bg-primary text-white text-xs font-mono font-bold"
+          >
+            Reset Filters
+          </button>
+        </div>
+      )}
     </div>
   );
 }
