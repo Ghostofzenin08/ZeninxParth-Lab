@@ -6,7 +6,30 @@ import Section from '../common/Section';
 import { sounds } from '../../utils/soundEffects';
 
 export default function CaseStudyLayout({ project }) {
-  if (!project) return null;
+  if (!project) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <div className="p-8 rounded-3xl border border-border bg-surface max-w-lg mx-auto shadow-xl">
+          <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary text-2xl mx-auto mb-4">
+            🔍
+          </div>
+          <h2 className="text-2xl font-bold text-text-main tracking-tight">System Specification Not Found</h2>
+          <p className="mt-2 text-sm text-text-muted leading-relaxed">
+            The requested architecture document or case study is not available in the current portfolio catalog.
+          </p>
+          <div className="mt-6">
+            <Link
+              to="/projects"
+              onClick={() => sounds.playUiClick()}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white font-mono text-xs font-bold hover:bg-primary-hover shadow-md transition-all"
+            >
+              <span>← Return to All Systems</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
