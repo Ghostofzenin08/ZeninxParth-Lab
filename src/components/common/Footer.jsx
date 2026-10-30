@@ -34,7 +34,14 @@ export default function Footer() {
             onClick={() => sounds.playUiClick()}
             className="hover:text-primary transition-colors"
           >
-            All Systems (8)
+            All Systems (9)
+          </Link>
+          <Link
+            to="/projects/orbital-the-last-engineer"
+            onClick={() => sounds.playWarp()}
+            className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+          >
+            Orbital 3D
           </Link>
           <Link
             to="/projects/resumatch"
