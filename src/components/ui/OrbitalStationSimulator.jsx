@@ -152,6 +152,43 @@ export default function OrbitalStationSimulator() {
   // Step counter for 4 repairs
   const repairedCount = [fusionOnline, busOnline, scrubbersOnline, commsOnline].filter(Boolean).length;
 
+  // Keyboard Hotkey Listener: 1-4 for Tools, Q to Cycle Multitool Mode
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      if (e.key === '1') {
+        setActiveTool(1);
+        sounds.playUiClick();
+        addLog('[TOOL] Diagnostic Scanner equipped ([1]). Aim at panels to scan.');
+      } else if (e.key === '2') {
+        setActiveTool(2);
+        sounds.playUiClick();
+        addLog(`[TOOL] Multitool equipped ([2]) in ${multitoolMode} mode.`);
+      } else if (e.key === '3') {
+        setActiveTool(3);
+        sounds.playUiClick();
+        addLog('[TOOL] Spare Fuse Pack equipped ([3]). Ready for circuit insertion.');
+      } else if (e.key === '4') {
+        setActiveTool(4);
+        sounds.playUiClick();
+        addLog('[TOOL] Auxiliary Battery Cell equipped ([4]). Ready for power injection.');
+      } else if (e.key === 'q' || e.key === 'Q') {
+        const modes = ['CALIBRATE', 'CUT_WELD', 'TIGHTEN'];
+        setMultitoolMode((prev) => {
+          const nextIndex = (modes.indexOf(prev) + 1) % modes.length;
+          const nextMode = modes[nextIndex];
+          sounds.playUiClick();
+          addLog(`[MULTITOOL] Switched mode: ${nextMode}`);
+          return nextMode;
+        });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [multitoolMode]);
+
   // Stalker awakening trigger upon 4 core repairs
   useEffect(() => {
     if (repairedCount === 4 && !stalkerAwake && !predatorNeutralized) {
@@ -173,7 +210,7 @@ export default function OrbitalStationSimulator() {
         setPressureKpa(101.3);
       } else {
         setCo2Ppm((prev) => Math.min(1400, prev + 2));
-        setOxygenReserve((prev) => Math.max(60, +(prev - 0.05).toFixed(1)));
+        setOxygenReserve((prev) => Math.max(0, +(prev - 0.05).toFixed(1)));
       }
 
       // Fusion output
@@ -182,44 +219,42 @@ export default function OrbitalStationSimulator() {
       }
 
       // Stalker movement simulation if awake and not trapped
-      if (stalkerAwake && !predatorNeutralized && !gasPurgeActive) {
-        setStalkerDistanceM((prev) => {
-          const delta = (Math.random() - 0.52) * 2;
-          const nextDist = Math.max(4.0, Math.min(25.0, +(prev + delta).toFixed(1)));
-          
-          // Proximity clicks audio warning
-          if (nextDist < 9.0 && prev >= 9.0) {
+      if (stalkerAwake && !predatorNeutralized && !gasPurgeActive && suitIntegrity > 0) {
+        const delta = (Math.random() - 0.52) * 2;
+        const nextDist = Math.max(4.0, Math.min(25.0, +(stalkerDistanceM + delta).toFixed(1)));
+
+        // Proximity clicks audio warning
+        if (nextDist < 9.0 && stalkerDistanceM >= 9.0) {
+          sounds.playBeep();
+          addLog(`⚠️ PROXIMITY ALERT: Creature acoustic clicks detected (${nextDist}m)! Retreat to Sanctuary!`);
+        }
+
+        // Damage check if extremely close and outside safe sanctuary
+        if (nextDist <= 4.5 && selectedRoom !== 'observatory') {
+          if (traumaLevel === 0) {
+            setTraumaLevel(1);
+            setSuitIntegrity(65);
             sounds.playBeep();
-            addLog(`⚠️ PROXIMITY ALERT: Creature acoustic clicks detected (${nextDist}m)! Retreat to Sanctuary!`);
+            addLog('💥 STALKER IMPACT: Hit 1 (35% damage). Directional trauma vignette active.');
+          } else if (traumaLevel === 1) {
+            setTraumaLevel(2);
+            setSuitIntegrity(30);
+            sounds.playBeep();
+            addLog('💥 CRITICAL TRAUMA: Hit 2 (70% cumulative damage). Severe camera tremor!');
+          } else if (traumaLevel === 2) {
+            setTraumaLevel(3);
+            setSuitIntegrity(0);
+            sounds.playWarp();
+            addLog('☠️ FATAL BLOW: Suit breached. Lead Engineer life signs terminated.');
           }
+        }
 
-          // Damage check if extremely close and outside safe sanctuary
-          if (nextDist <= 4.5 && selectedRoom !== 'observatory') {
-            setTraumaLevel((t) => {
-              const nextT = Math.min(3, t + 1);
-              if (nextT === 1) {
-                setSuitIntegrity(65);
-                addLog('💥 STALKER IMPACT: Hit 1 (35% damage). Directional trauma vignette active.');
-                sounds.playBeep();
-              } else if (nextT === 2) {
-                setSuitIntegrity(30);
-                addLog('💥 CRITICAL TRAUMA: Hit 2 (70% cumulative damage). Severe camera tremor!');
-                sounds.playBeep();
-              } else if (nextT === 3) {
-                setSuitIntegrity(0);
-                addLog('☠️ FATAL BLOW: Suit breached. Lead Engineer life signs terminated.');
-              }
-              return nextT;
-            });
-          }
-
-          return nextDist;
-        });
+        setStalkerDistanceM(nextDist);
       }
     }, 1500);
 
     return () => clearInterval(timer);
-  }, [scrubbersOnline, fusionOnline, stalkerAwake, predatorNeutralized, gasPurgeActive, selectedRoom]);
+  }, [scrubbersOnline, fusionOnline, stalkerAwake, predatorNeutralized, gasPurgeActive, selectedRoom, stalkerDistanceM, traumaLevel, suitIntegrity]);
 
   // Actions
   const handleRepairFusion = () => {
@@ -281,34 +316,85 @@ export default function OrbitalStationSimulator() {
       addLog('ℹ️ Creature remains dormant in lower cryogenic containment sector.');
       return;
     }
+    if (airlockSealed) {
+      sounds.playBeep();
+      addLog('❌ AIRLOCK SEALED: Bulkhead doors are currently locked. Unseal before attempting to lure predator inside.');
+      return;
+    }
     sounds.playWarp();
     setSelectedRoom('airlock');
     setStalkerLocation('airlock');
     setStalkerDistanceM(2.5);
-    addLog('🎯 TACTICAL MANEUVER: Emitted acoustic flare inside Airlock Chamber! Predator lured inside!');
+    addLog('🎯 TACTICAL MANEUVER: Emitted acoustic flare inside Airlock Chamber! Predator enters airlock!');
   };
 
   const handleSealAirlock = () => {
     sounds.playBeep();
     setAirlockSealed(true);
-    addLog('🔒 BULKHEADS SEALED: AirlockInner and AirlockOuter doors interlocked! Creature trapped inside airlock!');
+    if (stalkerLocation === 'airlock') {
+      if (selectedRoom === 'airlock') {
+        setSelectedRoom('corridor');
+      }
+      addLog('🔒 BULKHEADS SEALED: AirlockInner and AirlockOuter doors interlocked! Creature trapped inside airlock! Engineer stationed at Corridor terminal.');
+    } else {
+      addLog('🔒 BULKHEADS SEALED: Airlock bulkheads interlocked in empty state.');
+    }
   };
 
   const handleActivateGasPurge = () => {
-    sounds.playWarp();
+    if (!stalkerAwake) {
+      sounds.playBeep();
+      addLog('ℹ️ TARGET DORMANT: Creature has not broken containment.');
+      return;
+    }
+    if (stalkerLocation !== 'airlock') {
+      sounds.playBeep();
+      addLog(`❌ TARGET ABSENT: Apex predator is not inside the Airlock Chamber (${compartments[stalkerLocation]?.name || stalkerLocation})! Lure the specimen into the trap before discharging gas.`);
+      return;
+    }
     if (!airlockSealed) {
+      sounds.playBeep();
       addLog('❌ SAFETY INTERLOCK: Airlock bulkheads must be sealed before initiating toxic gas purge.');
       return;
     }
+    sounds.playWarp();
     setGasPurgeActive(true);
+    addLog('☣️ DECONTAMINATION PURGE ACTIVATED: High-pressure toxic decontamination gas venting into sealed Airlock Chamber...');
     setTimeout(() => {
       setPredatorNeutralized(true);
       setStalkerAwake(false);
       setStalkerDistanceM(0);
-      sounds.playWarp();
+      sounds.playSuccess();
       addLog('☣️ DECONTAMINATION PURGE COMPLETE: Lethal poison gas successfully eliminated apex biological predator!');
       addLog('🏆 MISSION ACCOMPLISHED: Astraea Station stabilized. Lead Engineer survival secured.');
     }, 2000);
+  };
+
+  const handleResetSimulation = () => {
+    setFusionOnline(false);
+    setBusOnline(false);
+    setScrubbersOnline(false);
+    setCommsOnline(false);
+    setSuitIntegrity(100);
+    setOxygenReserve(94);
+    setCo2Ppm(780);
+    setPressureKpa(98.4);
+    setFusionOutputKw(0);
+    setStalkerAwake(false);
+    setStalkerLocation('specimen_vault');
+    setStalkerDistanceM(18.5);
+    setAirlockSealed(false);
+    setGasPurgeActive(false);
+    setPredatorNeutralized(false);
+    setTraumaLevel(0);
+    setSelectedRoom('engineering');
+    setActiveDeck(1);
+    sounds.playUiClick();
+    setLogMessages([
+      '[INIT] ASTSTATION-09 DOCKING TELEMETRY RE-INITIALIZED',
+      '[ALERT] Primary Fusion Breaker TRIPPED. Backup battery reserve (4.2 kW).',
+      '[TASK] Lead Engineer: Enter Engineering Bay to restore 150 kW Fusion Turbine.'
+    ]);
   };
 
   const currentRoom = compartments[selectedRoom] || compartments.engineering;
@@ -352,41 +438,73 @@ export default function OrbitalStationSimulator() {
           </p>
         </div>
 
-        {/* Dual Mode Switcher: FEEL vs LOGICAL */}
-        <div className="flex items-center gap-2 self-start md:self-auto">
-          <span className="text-xs font-mono text-gray-400">Display Mode:</span>
-          <div className="p-1 rounded-xl bg-black/50 border border-cyan-500/30 flex items-center">
-            <button
-              type="button"
-              onClick={() => {
-                setHudMode('feel');
-                sounds.playUiClick();
-              }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                hudMode === 'feel'
-                  ? 'bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-md'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              FEEL MODE (Horror)
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setHudMode('logical');
-                sounds.playUiClick();
-              }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                hudMode === 'logical'
-                  ? 'bg-cyan-500 text-black shadow-md'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              LOGICAL MODE (Hard Sci-Fi)
-            </button>
+        {/* Mode Switcher and Reset Controls */}
+        <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono text-gray-400">Display:</span>
+            <div className="p-1 rounded-xl bg-black/50 border border-cyan-500/30 flex items-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setHudMode('feel');
+                  sounds.playUiClick();
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  hudMode === 'feel'
+                    ? 'bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-md'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                FEEL MODE
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setHudMode('logical');
+                  sounds.playUiClick();
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  hudMode === 'logical'
+                    ? 'bg-cyan-500 text-black shadow-md'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                LOGICAL MODE
+              </button>
+            </div>
           </div>
+
+          <button
+            type="button"
+            onClick={handleResetSimulation}
+            className="px-3 py-1.5 rounded-xl border border-cyan-500/30 bg-surface/50 text-gray-300 hover:text-cyan-300 hover:border-cyan-400 text-xs font-mono font-bold transition-all flex items-center gap-1.5"
+            title="Reset simulation to initial docking state"
+          >
+            <span>↺</span>
+            <span>Reset</span>
+          </button>
         </div>
       </div>
+
+      {/* Terminal Fatality Banner if Suit Integrity Depleted */}
+      {suitIntegrity === 0 && (
+        <div className="relative z-30 my-4 p-5 rounded-2xl bg-red-950/90 border border-red-500 text-center shadow-2xl animate-fade-in">
+          <div className="text-3xl mb-1">☠️</div>
+          <h4 className="text-lg font-black font-mono text-red-400 uppercase tracking-wider">
+            Critical Failure: Lead Engineer Terminated
+          </h4>
+          <p className="text-xs font-mono text-gray-300 mt-1 max-w-lg mx-auto mb-4 leading-relaxed">
+            Suit integrity depleted from apex predator claw trauma. The Astraea Biological Research Facility remains dark and drifting in Kepler-442b orbit.
+          </p>
+          <button
+            type="button"
+            onClick={handleResetSimulation}
+            className="px-6 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono font-bold text-xs uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all"
+          >
+            ↺ Re-dock Shuttle &amp; Retry Mission
+          </button>
+        </div>
+      )}
 
       {/* TOP TELEMETRY HUD GAUGES */}
       <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-3 my-5">
