@@ -1,5 +1,5 @@
 {
-  "name": "zeninxparth-game-store",
+  "name": "harshal-sonawane-portfolio",
   "private": true,
   "version": "1.1.0",
   "homepage": "https://ghostofzenin08.github.io/ZeninxParth-Lab",
@@ -19,7 +19,8 @@
     "lenis": "^1.1.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
