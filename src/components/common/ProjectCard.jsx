@@ -218,7 +218,16 @@ export default function ProjectCard({
               </a>
             )}
             {liveUrl && (
-              liveUrl.startsWith('http') && !liveUrl.includes('ghostofzenin08.github.io') ? (
+              liveUrl.includes('ZeninxParth-Lab') ? (
+                <Link
+                  to={caseStudyUrl}
+                  onClick={() => sounds.playWarp()}
+                  className="px-2.5 py-1 rounded-lg border border-primary/40 text-primary hover:bg-primary/10 font-mono transition-colors font-bold"
+                  title="Interactive System Simulation"
+                >
+                  Sim ↗
+                </Link>
+              ) : (
                 <a
                   href={liveUrl}
                   target="_blank"
@@ -229,15 +238,6 @@ export default function ProjectCard({
                 >
                   Demo ↗
                 </a>
-              ) : (
-                <Link
-                  to={caseStudyUrl}
-                  onClick={() => sounds.playWarp()}
-                  className="px-2.5 py-1 rounded-lg border border-primary/40 text-primary hover:bg-primary/10 font-mono transition-colors font-bold"
-                  title="Interactive System Simulation"
-                >
-                  Sim ↗
-                </Link>
               )
             )}
             {githubUrl && (
