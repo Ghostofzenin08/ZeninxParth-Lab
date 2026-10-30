@@ -436,6 +436,22 @@ export default function HomePage() {
         <div className="relative border-l-2 border-primary/30 pl-6 sm:pl-8 space-y-8">
           {/* Milestone 1 */}
           <div className="relative">
+            <span className="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20" />
+            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold">
+              <span>2026</span>
+              <span>•</span>
+              <span>Godot 4.7.2 3D Flagship Release</span>
+            </div>
+            <h4 className="text-lg font-bold text-text-main mt-1">
+              ORBITAL: The Last Engineer — 13 Compartments &amp; 1,033 Headless CI Tests
+            </h4>
+            <p className="text-xs sm:text-sm text-text-muted mt-1 leading-relaxed">
+              Authored first-person 3D spacecraft engineering survival and psychological horror simulation in Godot Engine 4.7.2. Engineered 13 interconnected compartments across 2 decks, dual Feel &amp; Logical telemetry modes, autonomous apex stalker AI, and 1,033 passing assertions across 43 automated test suites.
+            </p>
+          </div>
+
+          {/* Milestone 2 */}
+          <div className="relative">
             <span className="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20" />
             <div className="flex items-center gap-2 text-xs font-mono text-primary font-bold">
               <span>2026</span>
