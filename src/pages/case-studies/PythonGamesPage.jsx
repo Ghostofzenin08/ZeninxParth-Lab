@@ -3,6 +3,8 @@ import CaseStudyLayout from '../../components/layout/CaseStudyLayout';
 import { projectsData } from '../../data/projectsData';
 
 export default function PythonGamesPage() {
-  const project = projectsData.find((p) => p.id === 'python-games');
+  const project = projectsData.find(
+    (p) => p.id === 'game-development-hub' || p.id === 'python-games'
+  );
   return <CaseStudyLayout project={project} />;
 }
