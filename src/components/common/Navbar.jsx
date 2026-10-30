@@ -15,8 +15,9 @@ export default function Navbar() {
 
   const links = [
     { name: 'Projects', path: '/projects' },
+    { name: 'Orbital 3D', path: '/projects/orbital-the-last-engineer', badge: '3D', highlight: true },
     { name: 'ResuMatch AI', path: '/projects/resumatch', badge: 'AI' },
-    { name: 'Echo of Dread', path: '/projects/echo-of-dread', highlight: true },
+    { name: 'Echo of Dread', path: '/projects/echo-of-dread' },
     { name: '3D Orbit Sim', path: '/projects/3d-galactic-model' },
     { name: 'About', path: '/about' },
   ];
