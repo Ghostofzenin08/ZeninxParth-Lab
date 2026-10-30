@@ -218,16 +218,27 @@ export default function ProjectCard({
               </a>
             )}
             {liveUrl && (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => sounds.playUiClick()}
-                className="px-2.5 py-1 rounded-lg border border-border text-text-subtle hover:text-text-main hover:bg-surface-elevated font-mono transition-colors"
-                title="Live Application Demo"
-              >
-                Demo ↗
-              </a>
+              liveUrl.startsWith('http') && !liveUrl.includes('ghostofzenin08.github.io') ? (
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => sounds.playUiClick()}
+                  className="px-2.5 py-1 rounded-lg border border-border text-text-subtle hover:text-text-main hover:bg-surface-elevated font-mono transition-colors"
+                  title="Live Application Demo"
+                >
+                  Demo ↗
+                </a>
+              ) : (
+                <Link
+                  to={caseStudyUrl}
+                  onClick={() => sounds.playWarp()}
+                  className="px-2.5 py-1 rounded-lg border border-primary/40 text-primary hover:bg-primary/10 font-mono transition-colors font-bold"
+                  title="Interactive System Simulation"
+                >
+                  Sim ↗
+                </Link>
+              )
             )}
             {githubUrl && (
               <a
