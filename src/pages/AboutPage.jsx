@@ -58,7 +58,7 @@ export default function AboutPage() {
         "Render WSGI Cloud Hosting",
         "Vercel Edge Platform",
         "GitHub Pages & Automated Actions CI/CD",
-        "Automated Headless Test Suites (394 Tests)",
+        "Automated Headless Test Suites (1,427+ Assertions)",
         "PyInstaller Desktop Packaging",
         "Git Version Control Architecture"
       ]
@@ -101,7 +101,11 @@ export default function AboutPage() {
           </p>
 
           <p>
-            In indie game development under the <strong className="text-text-main">ZeninXParth</strong> lab, I directed the architecture of <strong className="text-text-main">Echo of Dread</strong>, an atmospheric 2D sci-fi time-loop puzzle game built in <strong className="text-text-main">Godot Engine 4.7.2</strong>. Spanning 50 hand-crafted chambers, up to 5 concurrent historical holographic Echoes, custom GLSL chromatic rewind shaders, and a comprehensive 394-test automated headless CI suite, it embodies my commitment to deterministic systems architecture.
+            In indie game development, I authored <strong className="text-text-main">ORBITAL: The Last Engineer</strong>, a first-person 3D spacecraft engineering survival and psychological horror simulation in <strong className="text-text-main">Godot Engine 4.7.2</strong>. Built with 13 interconnected compartments across 2 decks, dual Feel & Logical telemetry modes, an autonomous apex stalker AI, and 1,033 passing assertions across 43 automated test suites, it demonstrates scalable, deterministic systems design.
+          </p>
+
+          <p>
+            Under the <strong className="text-text-main">ZeninXParth</strong> lab, I also directed <strong className="text-text-main">Echo of Dread</strong>, an atmospheric 2D sci-fi time-loop puzzle game built in Godot Engine 4.7.2. Spanning 50 hand-crafted chambers, up to 5 concurrent historical holographic Echoes, custom GLSL chromatic rewind shaders, and a 394-test automated headless CI suite, it further embodies my commitment to deterministic systems architecture.
           </p>
 
           <p>
