@@ -15,8 +15,8 @@ export const projectsData = [
     caseStudyUrl: "/projects/orbital-the-last-engineer",
     liveUrl: "https://ghostofzenin08.github.io/Orbital-the-last-engineer/",
     githubUrl: "https://github.com/Ghostofzenin08/Orbital-the-last-engineer",
-    coverImage: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
-    thumbnail: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80",
+    coverImage: "https://ghostofzenin08.github.io/Orbital-the-last-engineer/assets_ui/image%204.png",
+    thumbnail: "https://ghostofzenin08.github.io/Orbital-the-last-engineer/assets_ui/Story01.png",
     stats: {
       compartments: "13 Ship Compartments",
       decks: "2 Connected Decks",
