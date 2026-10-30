@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
 import EchoOfDreadPage from './pages/case-studies/EchoOfDreadPage';
+import OrbitalPage from './pages/case-studies/OrbitalPage';
 import BlockRushPage from './pages/case-studies/BlockRushPage';
 import MeteorDodgePage from './pages/case-studies/MeteorDodgePage';
 import ZeninXParthPage from './pages/case-studies/ZeninXParthPage';
@@ -24,6 +25,8 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
 
         {/* Featured Projects & Case Studies */}
+        <Route path="/projects/orbital-the-last-engineer" element={<OrbitalPage />} />
+        <Route path="/projects/orbital" element={<OrbitalPage />} />
         <Route path="/projects/resumatch" element={<ResumatchPage />} />
         <Route path="/projects/echo-of-dread" element={<EchoOfDreadPage />} />
         <Route path="/projects/3d-galactic-model" element={<GalacticModelPage />} />
