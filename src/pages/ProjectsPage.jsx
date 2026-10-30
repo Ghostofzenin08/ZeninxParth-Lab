@@ -46,7 +46,7 @@ export default function ProjectsPage() {
             Engineering Systems & Production Releases
           </span>
           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-bold">
-            8 Published Projects
+            9 Published Projects
           </span>
         </div>
 
@@ -56,7 +56,7 @@ export default function ProjectsPage() {
               Projects & Architecture
             </h1>
             <p className="mt-3 text-text-muted max-w-2xl text-base leading-relaxed">
-              Explore 8 specialized engineering solutions spanning Google Gemini AI microservices, Godot 4.x time-loop state machines, n-body gravitational simulations, and developer productivity tools.
+              Explore 9 specialized engineering solutions spanning Godot 4.7 3D spacecraft engineering horror, Google Gemini AI microservices, time-loop state machines, n-body gravitational simulations, and developer productivity tools.
             </p>
           </div>
 
