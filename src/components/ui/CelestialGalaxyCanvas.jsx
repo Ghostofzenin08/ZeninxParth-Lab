@@ -21,6 +21,7 @@ export default function CelestialGalaxyCanvas() {
     currentRotationY: 0,
     isDragging: false,
     previousMousePosition: { x: 0, y: 0 },
+    isVisible: true,
   });
 
   stateRef.current.mode = mode;
@@ -29,6 +30,17 @@ export default function CelestialGalaxyCanvas() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    // Viewport intersection observer to eliminate off-screen GPU load
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          stateRef.current.isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.05 }
+    );
+    visibilityObserver.observe(container);
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -268,6 +280,10 @@ export default function CelestialGalaxyCanvas() {
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
+
+      // Skip render calculations when hero canvas is scrolled out of viewport
+      if (!stateRef.current.isVisible) return;
+
       const delta = clock.getDelta();
       const elapsedTime = clock.getElapsedTime();
 
@@ -362,6 +378,7 @@ export default function CelestialGalaxyCanvas() {
     // Cleanup
     return () => {
       cancelAnimationFrame(frameId);
+      visibilityObserver.disconnect();
       window.removeEventListener('pointermove', handlePointerMove);
       container.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointerup', handlePointerUp);
@@ -385,7 +402,7 @@ export default function CelestialGalaxyCanvas() {
   return (
     <div className="absolute inset-0 overflow-hidden select-none pointer-events-auto">
       {/* Three.js Canvas Container */}
-      <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
+      <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing touch-none" />
 
       {/* Interactive 3D HUD Controls */}
       <div className="absolute bottom-6 right-6 z-20 flex flex-col items-end gap-2 text-xs font-mono">
