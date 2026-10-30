@@ -1,5 +1,94 @@
 export const projectsData = [
   {
+    id: "orbital-the-last-engineer",
+    title: "ORBITAL: The Last Engineer",
+    subtitle: "First-person 3D spacecraft engineering, survival, and psychological horror game built in Godot Engine 4.7.2. Restore the crippled Astraea station's dying fusion reactor, switch between Feel & Logical telemetry modes, and outmaneuver an autonomous apex predator.",
+    tagline: "\"The ship is not a collection of rooms with decorative props. It is one interconnected machine.\"",
+    category: "Flagship 3D Sci-Fi Game",
+    filterCategory: "game-dev",
+    engine: "Godot Engine v4.7.2 / GDScript 3D & Procedural PCM Audio",
+    featured: true,
+    badge: "🚀 Godot 4.7.2 3D",
+    rating: "5.0 ★",
+    platforms: ["Play in Browser (Web)", "Desktop (Windows EXE)", "Headless Automated CI"],
+    tags: ["Godot 4.7.2", "GDScript 3D", "3D Sci-Fi Horror", "Dual Experience Modes", "Apex Stalker AI", "1,033 Passing Assertions", "43 Test Suites", "Ship Systems Sim", "Atmospheric Scrubbers"],
+    caseStudyUrl: "/projects/orbital-the-last-engineer",
+    liveUrl: "https://ghostofzenin08.github.io/Orbital-the-last-engineer/",
+    githubUrl: "https://github.com/Ghostofzenin08/Orbital-the-last-engineer",
+    coverImage: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80",
+    stats: {
+      compartments: "13 Ship Compartments",
+      decks: "2 Connected Decks",
+      modes: "Feel | Logical Modes",
+      tests: "1,033 / 1,033 Assertions",
+      framerate: "60 FPS Integrated PBR"
+    },
+    problem: "Most sci-fi survival games treat space stations as passive backdrops with arbitrary keycards and scripted jump scares. In ORBITAL: The Last Engineer, the architectural objective was designing the Astraea Biological Research Facility as a single deterministic 13-compartment machine where electrical power busing, atmospheric life support scrubbers, and coolant manifolds are physically interdependent—while an unscheduled apex predator stalks the decks using dynamic spatial waypoints, door breaching AI, and 9-meter proximity audio detection.",
+    team: [
+      {
+        name: "Harshal Sonawane (Ghostofzenin08 / oldest_dream08)",
+        role: "Solo Creator & Lead Architect: 3D Systems Engineering, Dual-Mode Telemetry State Machines, Autonomous Stalker AI, Procedural Audio Synthesis & Headless Test Suite",
+        github: "https://github.com/Ghostofzenin08"
+      }
+    ],
+    decisions: [
+      {
+        title: "Dual Experience Architecture: Feel vs. Logical Modes",
+        detail: "Engineered a switchable on-the-fly telemetry pipeline. 'Feel Mode' renders a minimalist glass HUD focusing on suit integrity and raw psychological tension without telemetry overload. 'Logical Mode' exposes deep real-time engineering metrics: O2 partial pressure, CO2 ppm toxicity, barometric pressure differentials (0.3 kPa/s decompression hazards), and electrical bus load curves."
+      },
+      {
+        title: "13-Compartment Interconnected Machine & Life Support Bus",
+        detail: "Modeled a deterministic dependency graph across Deck 1 (Upper Deck) and Deck 2 (Lower Deck). Restoring the 150 kW Fusion Turbine powers the Main Distribution Bus, which feeds Life Support scrubbers, medical synthesis beds, and the motorized bulkhead airlocks needed to isolate the biological threat."
+      },
+      {
+        title: "Autonomous Predator Stalker AI & Tactical Purge Mechanics",
+        detail: "Developed a multi-deck spatial waypoint navigation system allowing the apex predator to traverse maintenance bypasses, force open unsealed doors, and react dynamically to player suit emissions within 9 meters. Designed a non-combat resolution where the player lures the entity into the dual-door Airlock Chamber and triggers the physical Decontamination Gas Valve."
+      },
+      {
+        title: "1,033 Automated Headless Test Assertions across 43 Suites",
+        detail: "Constructed a comprehensive automated test runner executing headless in Godot Engine 4.7.2 (res://tests/test_runner.tscn). Validates power routing, atmospheric decay, save/load serialization, 3-hit combat trauma mechanics, and 360° input mappings with 0 regressions."
+      }
+    ],
+    features: [
+      "Interconnected 13-Compartment Vessel: Spanning Upper Deck and Lower Subdeck with maintenance crawlways and specimen vaults",
+      "Dual Telemetry Modes: Feel Mode (atmospheric horror) & Logical Mode (hard sci-fi engineering simulation)",
+      "Hands-On Engineering Toolset: Diagnostic Scanner [1], Multitool / Welder [2] (Calibrate, Cut_Weld, Tighten), fuses, battery cells, and coolant",
+      "Autonomous Apex Stalker: Dynamic waypoint pathfinding, bulkhead unlatching, and 9m spatial audio proximity detection",
+      "Safe Room Sanctuary: Research Observatory with hermetically sealed bulkheads providing 100% stalker isolation",
+      "3-Hit Combat & Trauma FX: Directional blood vignettes, heavy camera trauma surges, and lethal fatality sequences",
+      "Tactical Gas Purge: Non-combative containment puzzle utilizing dual-door airlocks and lethal decontamination gas",
+      "1,033 Passing Automated Test Assertions: Verified 100% headless across 43 unit and integration suites"
+    ],
+    controls: [
+      { action: "Move", pc: "W A S D", touch: "Arrow Keys", desc: "Omnidirectional engineer locomotion with inertial acceleration" },
+      { action: "Sprint", pc: "Shift (Hold)", touch: "Shift (Hold)", desc: "Accelerated movement; increases sound emission footprint" },
+      { action: "Look / Aim (360°)", pc: "Mouse 360°", touch: "Arrow Keys / PageUp / PageDn", desc: "Full pitch and yaw inspection with configurable sensitivity" },
+      { action: "Interact / Use", pc: "E / Left Click", touch: "Enter", desc: "Operate breakers, workstations, airlock valves, and supply crates" },
+      { action: "Diagnostic Scanner", pc: "[1] Key", touch: "[1] Key", desc: "Inspect machinery efficiency, thermal gradients, and fault codes" },
+      { action: "Multitool / Welder", pc: "[2] Key (Cycle: Q)", touch: "[2] Key (Cycle: Q)", desc: "Calibrate relays, Cut/Weld breach plates, or Tighten hydraulic clamps" },
+      { action: "Spare Fuse / Battery", pc: "[3] / [4] Keys", touch: "[3] / [4] Keys", desc: "Insert consumable fuses or battery packs into dead power sub-panels" },
+      { action: "Ship Schematic Map", pc: "M Key", touch: "M Key", desc: "Access the 13-compartment dual-deck structural architectural slate" },
+      { action: "Tactical Operations / Pause", pc: "Tab / Esc", touch: "Info Button (UI Header)", desc: "Toggle telemetry dossiers, system dependencies, or pause menu" }
+    ],
+    compartmentsList: [
+      { name: "Command Bridge", deck: 1, type: "Armored Cockpit", highlight: "Cockpit", equipment: "Nav holotable, avionics link, thrusters", tactical: "Flight control data requires avionics bus sync", description: "Reinforced cockpit viewport overlooking Kepler-442b with navigation consoles." },
+      { name: "Research Observatory", deck: 1, type: "Safe Room Sanctuary", highlight: "Safe Haven", equipment: "Panoramic Kepler-442b dome, sealed bulkheads", tactical: "Predator CANNOT enter, detect, or attack inside", description: "Airtight sanctuary dome providing respite to plan routes and check schematics." },
+      { name: "Avionics Bay", deck: 1, type: "Optical Server Bus", highlight: "Optical Data", equipment: "Server racks, relay trunks", tactical: "Must restore bus to sync bridge navigation", description: "Optical data routing infrastructure and flight computer relay banks." },
+      { name: "Crew Quarters", deck: 1, type: "Living Quarters", highlight: "Living Bunks", equipment: "Bunks, lockers, water recycler", tactical: "Contains crew audio logs revealing predator escape", description: "Living quarters with desiccated hydroponics and personal crew storage." },
+      { name: "Medical Infirmary", deck: 1, type: "Surgical Suite", highlight: "Trauma Care", equipment: "Bio-diagnostic bed, trauma medkits, O2 tank", tactical: "Replenish suit integrity and oxygen supplies here", description: "Surgical triage bay equipped with bio-scanners and sterile medical cabinets." },
+      { name: "Central Corridor", deck: 1, type: "Spine Thoroughfare", highlight: "Main Artery", equipment: "High-clearance spine, motorized bulkheads", tactical: "High predator traffic; check motion before entering", description: "High-clearance spine connecting all Deck 1 compartments with automatic bulkheads." },
+      { name: "Life Support Module", deck: 1, type: "Atmospheric Scrubber Hub", highlight: "O2 / CO2", equipment: "Solid-state O2 generator, amine scrubbers", tactical: "Replace filter cartridges to halt CO2 toxicity rise", description: "Atmospheric circulation center maintaining habitable cabin pressure." },
+      { name: "Main Cargo Bay & Annex", deck: 1, type: "Heavy Storage & Hoist", highlight: "Aux Repairs", equipment: "Hydraulic hoist, bypass valve, salvage crates", tactical: "Access to maintenance crawlway hatch", description: "Industrial freight bay housing auxiliary junction panels and scrap parts." },
+      { name: "Airlock Chamber & EVA", deck: 1, type: "Dual-Door Trap", highlight: "Gas Purge", equipment: "AirlockInner, AirlockOuter, Decontamination Gas Valve", tactical: "Trap apex predator here to trigger decontamination purge", description: "Dual-door pressurized staging area with lethal chemical purge nozzles." },
+      { name: "Engineering Bay", deck: 1, type: "Primary Power Core", highlight: "150 kW Turbine", equipment: "150 kW fusion turbine, main bus breaker, workbench", tactical: "Core repair step 1: patch turbine and reset primary breaker", description: "Heavy machinery bay housing the 150 kW fusion turbine and main breaker." },
+      { name: "Reactor Subdeck", deck: 2, type: "Lower Power Deck", highlight: "Fuel Throttle", equipment: "Sloped ramp access, fuel throttle, battery banks", tactical: "Direct connection to Engineering via inclined walkway", description: "Subterranean maintenance tier supporting primary reactor fuel lines." },
+      { name: "Specimen Vault", deck: 2, type: "Containment Pods", highlight: "Bio Origin", equipment: "Shattered cryo pods, DoorVault bulkhead", tactical: "Ground zero of unauthorized genetic creature breach", description: "Reinforced lower containment sector where cryogenic experimental pods failed." },
+      { name: "Maintenance Crawlway", deck: 2, type: "Utility Transit", highlight: "0.3 kPa/s Breach", equipment: "Low-clearance duct, hull breach leak", tactical: "Decompression hazard: suit oxygen drains rapidly here", description: "Cramped bypass conduit between Cargo Bay and Engineering with structural puncture." }
+    ],
+    learnings: "Treating the spacecraft as a single interconnected physical apparatus rather than isolated puzzle rooms proved that authentic engineering constraints generate far deeper psychological tension than scripted cinematics."
+  },
+  {
     id: "resumatch",
     title: "ResuMatch",
     subtitle: "AI-powered real-time ATS resume builder and career engine powered by Google Gemini AI API, sub-150ms semantic parsing, and live interactive DOM preview.",
