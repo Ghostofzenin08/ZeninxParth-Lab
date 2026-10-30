@@ -14,9 +14,11 @@ export default function Navbar() {
   };
 
   const links = [
-    { name: 'Game Store', path: '/projects' },
+    { name: 'Projects', path: '/projects' },
+    { name: 'ResuMatch AI', path: '/projects/resumatch', badge: 'AI' },
     { name: 'Echo of Dread', path: '/projects/echo-of-dread', highlight: true },
-    { name: 'About Studio', path: '/about' },
+    { name: '3D Orbit Sim', path: '/projects/3d-galactic-model' },
+    { name: 'About', path: '/about' },
   ];
 
   const isActive = (path) => {
@@ -36,28 +38,28 @@ export default function Navbar() {
           <div className="w-9 h-9 rounded-xl bg-black border border-primary/40 flex items-center justify-center group-hover:border-primary group-hover:shadow-glow-red transition-all relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <span className="text-primary font-black font-mono text-sm tracking-tighter relative z-10">
-              ZX
+              HS
             </span>
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-sm tracking-tight text-text-main group-hover:text-primary transition-colors flex items-center gap-1.5">
-              <span>ZeninXParth</span>
+              <span>Harshal Sonawane</span>
               <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-primary/10 text-primary border border-primary/20">
-                LABS
+                PORTFOLIO
               </span>
             </span>
             <span className="text-[10px] font-mono text-text-subtle tracking-wider uppercase">
-              Indie Games & Tech
+              Aerospace • Full-Stack • AI • Game Dev
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1">
           <Link
             to="/"
             onClick={() => sounds.playUiClick()}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-mono font-medium transition-all ${
               location.pathname === '/'
                 ? 'text-primary bg-primary/10 font-bold'
                 : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
@@ -77,7 +79,7 @@ export default function Navbar() {
                   sounds.playUiClick();
                 }
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
                 isActive(link.path)
                   ? 'text-primary bg-primary/10 font-bold'
                   : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
@@ -87,18 +89,23 @@ export default function Navbar() {
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
               )}
               <span>{link.name}</span>
+              {link.badge && (
+                <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                  {link.badge}
+                </span>
+              )}
             </Link>
           ))}
 
-          {/* Direct itch.io external store link */}
+          {/* Direct GitHub Link */}
           <a
-            href="https://zeninxparth.itch.io"
+            href="https://github.com/Ghostofzenin08"
             target="_blank"
             rel="noreferrer"
             onClick={() => sounds.playUiClick()}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold text-[#fa5c5c] hover:bg-[#fa5c5c]/10 flex items-center gap-1 transition-all"
+            className="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold text-text-muted hover:text-primary hover:bg-surface-elevated flex items-center gap-1 transition-all"
           >
-            <span>itch.io</span>
+            <span>GitHub</span>
             <span>↗</span>
           </a>
         </nav>
@@ -124,9 +131,9 @@ export default function Navbar() {
             target="_blank"
             rel="noreferrer"
             onClick={() => sounds.playWarp()}
-            className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-[#fa5c5c] text-white hover:bg-[#e04545] shadow-lg shadow-[#fa5c5c]/25 transition-all"
+            className="hidden sm:inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-[#fa5c5c] text-white hover:bg-[#e04545] shadow-lg shadow-[#fa5c5c]/25 transition-all"
           >
-            <span>itch.io Store ↗</span>
+            <span>itch.io ↗</span>
           </a>
 
           {/* Mobile hamburger menu button */}
@@ -135,7 +142,7 @@ export default function Navbar() {
               sounds.playUiClick();
               setMobileMenuOpen(!mobileMenuOpen);
             }}
-            className="p-2 md:hidden rounded-xl border border-border bg-surface text-text-main"
+            className="p-2 lg:hidden rounded-xl border border-border bg-surface text-text-main"
             aria-label="Toggle menu"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -151,7 +158,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-surface/95 backdrop-blur-xl px-4 py-4 flex flex-col gap-2">
+        <div className="lg:hidden border-b border-border bg-surface/95 backdrop-blur-xl px-4 py-4 flex flex-col gap-2">
           <Link
             to="/"
             onClick={() => {
@@ -181,31 +188,37 @@ export default function Navbar() {
               <span>{link.name}</span>
               {link.highlight && (
                 <span className="text-[10px] uppercase font-bold text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/30">
-                  Flagship
+                  Flagship Game
+                </span>
+              )}
+              {link.badge && (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                  {link.badge}
                 </span>
               )}
             </Link>
           ))}
 
           <a
-            href="https://zeninxparth.itch.io"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMobileMenuOpen(false)}
-            className="px-3 py-2 rounded-xl text-sm font-mono font-bold text-[#fa5c5c] bg-[#fa5c5c]/10 border border-[#fa5c5c]/20 flex items-center justify-between mt-2"
-          >
-            <span>Visit itch.io Profile & Store</span>
-            <span>↗</span>
-          </a>
-
-          <a
             href="https://github.com/Ghostofzenin08"
             target="_blank"
             rel="noreferrer"
             onClick={() => setMobileMenuOpen(false)}
-            className="px-3 py-2 rounded-xl text-xs font-mono text-text-subtle hover:text-text-main"
+            className="px-3 py-2 rounded-xl text-xs font-mono text-text-subtle hover:text-text-main flex items-center justify-between border-t border-border/80 mt-2 pt-3"
           >
-            GitHub: @Ghostofzenin08 ↗
+            <span>GitHub Profile (@Ghostofzenin08)</span>
+            <span>↗</span>
+          </a>
+
+          <a
+            href="https://zeninxparth.itch.io"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            className="px-3 py-2 rounded-xl text-xs font-mono font-bold text-[#fa5c5c] bg-[#fa5c5c]/10 border border-[#fa5c5c]/20 flex items-center justify-between"
+          >
+            <span>itch.io Games Store</span>
+            <span>↗</span>
           </a>
         </div>
       )}
