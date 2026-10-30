@@ -16,7 +16,7 @@ export default function CaseStudyLayout({ project }) {
           onClick={() => sounds.playUiClick()}
           className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-text-subtle hover:text-primary transition-colors"
         >
-          <span>←</span> Back to Game Store & Projects
+          <span>←</span> Back to All Systems & Projects
         </Link>
         {project.itchUrl && (
           <a
