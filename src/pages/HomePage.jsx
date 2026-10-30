@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import CelestialGalaxyCanvas from '../components/ui/CelestialGalaxyCanvas';
 import GalacticOrbitSimulator from '../components/ui/GalacticOrbitSimulator';
 import TimeLoopSimulator from '../components/ui/TimeLoopSimulator';
+import OrbitalStationSimulator from '../components/ui/OrbitalStationSimulator';
 import Section from '../components/common/Section';
 import Button from '../components/ui/Button';
 import ProjectCard from '../components/common/ProjectCard';
@@ -12,7 +13,7 @@ import { sounds } from '../utils/soundEffects';
 
 export default function HomePage() {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [activeSimTab, setActiveSimTab] = useState('astrophysics'); // 'astrophysics' | 'timeloop'
+  const [activeSimTab, setActiveSimTab] = useState('orbital'); // 'orbital' | 'astrophysics' | 'timeloop'
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const filteredProjects = activeFilter === 'all'
@@ -94,7 +95,7 @@ export default function HomePage() {
               size="lg"
               onClick={() => sounds.playUiClick()}
             >
-              🚀 Explore 8 Systems
+              🚀 Explore 9 Systems
             </Button>
 
             <a
@@ -102,7 +103,7 @@ export default function HomePage() {
               onClick={() => sounds.playWarp()}
               className="inline-flex items-center justify-center font-medium rounded-xl px-7 py-3 text-base gap-2 bg-surface border border-primary/30 text-text-main hover:border-primary hover:bg-surface-elevated shadow-lg transition-all active:scale-[0.98]"
             >
-              <span>🪐 3D Celestial Sim</span>
+              <span>🛸 3D Spacecraft Sim</span>
             </a>
 
             <a
@@ -131,7 +132,7 @@ export default function HomePage() {
           {/* Metrics Ribbon */}
           <div className="mt-12 pt-6 border-t border-border/80 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-text-subtle pointer-events-auto">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-text-main text-base">8</span>
+              <span className="font-extrabold text-text-main text-base">9</span>
               <span>Featured Systems</span>
             </div>
             <div className="flex items-center gap-2">
@@ -139,16 +140,16 @@ export default function HomePage() {
               <span>Gemini AI NLP</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-emerald-400 text-base">394</span>
-              <span>Headless CI Tests</span>
+              <span className="font-extrabold text-emerald-400 text-base">1,033+</span>
+              <span>Headless CI Assertions</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-primary text-base">60 FPS</span>
               <span>Deterministic Kinematics</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-amber-400 text-base">50</span>
-              <span>Chambers & Sectors</span>
+              <span className="font-extrabold text-amber-400 text-base">13</span>
+              <span>Ship Compartments</span>
             </div>
           </div>
         </div>
@@ -215,11 +216,11 @@ export default function HomePage() {
                 Indie Game Architecture
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-text-muted leading-relaxed">
-                Godot 4.7 time-loop state machines, custom GLSL chromatic rewind shaders, and sub-frame vector flight kinematics.
+                Godot 4.7 3D spacecraft engineering horror, autonomous apex stalker AI, time-loop state machines, and GLSL rewind shaders.
               </p>
             </div>
             <div className="mt-4 pt-4 border-t border-border/80 text-[11px] font-mono text-emerald-400 font-semibold">
-              Echo of Dread • Godot • Pygame
+              Orbital: The Last Engineer • Echo of Dread • Godot
             </div>
           </div>
 
@@ -248,7 +249,7 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-primary font-bold">
-              Computational Physics Laboratory
+              Computational Physics & Systems Laboratory
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-text-main mt-1 tracking-tight">
               Interactive Engines & Real-Time Simulations
@@ -256,14 +257,28 @@ export default function HomePage() {
           </div>
 
           {/* Simulator Tab Buttons */}
-          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-surface border border-border">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-surface border border-border">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSimTab('orbital');
+                sounds.playUiClick();
+              }}
+              className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                activeSimTab === 'orbital'
+                  ? 'bg-cyan-500 text-black shadow-md'
+                  : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
+              }`}
+            >
+              🛸 Orbital Station Sim
+            </button>
             <button
               type="button"
               onClick={() => {
                 setActiveSimTab('astrophysics');
                 sounds.playUiClick();
               }}
-              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
                 activeSimTab === 'astrophysics'
                   ? 'bg-primary text-white shadow-md'
                   : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
@@ -277,7 +292,7 @@ export default function HomePage() {
                 setActiveSimTab('timeloop');
                 sounds.playWarp();
               }}
-              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
                 activeSimTab === 'timeloop'
                   ? 'bg-primary text-white shadow-md'
                   : 'text-text-muted hover:text-text-main hover:bg-surface-elevated'
@@ -289,7 +304,11 @@ export default function HomePage() {
         </div>
 
         {/* Tab Content */}
-        {activeSimTab === 'astrophysics' ? (
+        {activeSimTab === 'orbital' ? (
+          <div>
+            <OrbitalStationSimulator />
+          </div>
+        ) : activeSimTab === 'astrophysics' ? (
           <GalacticOrbitSimulator />
         ) : (
           <div className="rounded-3xl border border-primary/30 bg-surface/95 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
@@ -309,7 +328,7 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* ALL 8 FEATURED PROJECTS SHOWCASE */}
+      {/* ALL 9 FEATURED PROJECTS SHOWCASE */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
@@ -318,14 +337,14 @@ export default function HomePage() {
                 Portfolio Systems
               </span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
-                8 Published Works
+                9 Published Works
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-text-main tracking-tight">
               Software Architecture & Project Showcase
             </h2>
             <p className="mt-2 text-sm sm:text-base text-text-muted max-w-2xl">
-              From Google Gemini AI resume parsers and Godot 4 time-loop puzzle games to n-body orbital dynamics and developer browser extensions.
+              From Godot 4 3D spacecraft engineering horror and Google Gemini AI resume parsers to time-loop puzzle games, n-body orbital dynamics, and developer browser extensions.
             </p>
           </div>
 
