@@ -1,4 +1,4 @@
-name: Deploy ZeninXParth Game Store to GitHub Pages
+name: Deploy Harshal Sonawane Portfolio to GitHub Pages
 
 on:
   push:
